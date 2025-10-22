@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sport Club Corinthians Paulista</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            overflow-x: hidden;
+        }
+        
+        .bebas {
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 0.05em;
+        }
+        
+        .gold-gradient {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glow-gold {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5), 0 0 40px rgba(255, 215, 0, 0.3);
+        }
+        
+        .glow-gold-text {
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 215, 0, 0.4);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
+            }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .animate-fadeInUp {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        
+        .animate-pulse-custom {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .animate-slideInLeft {
+            animation: slideInLeft 0.8s ease-out forwards;
+        }
+        
+        .delay-200 {
+            animation-delay: 0.2s;
+        }
+        
+        .delay-400 {
+            animation-delay: 0.4s;
+        }
+        
+        .delay-600 {
+            animation-delay: 0.6s;
+        }
+        
+        .delay-800 {
+            animation-delay: 0.8s;
+        }
+        
+        .noise-bg {
+            position: relative;
+        }
+        
+        .noise-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="noise-bg">
+    <!-- Hero Section -->
+    <div class="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 relative">
+        <!-- Background gradient overlay -->
+        <div class="absolute inset-0 bg-gradient-to-b from-black via-gray-900 to-black opacity-90"></div>
+        
+        <!-- Content -->
+        <div class="relative z-10 text-center max-w-6xl mx-auto">
+            <!-- Main Title -->
+            <h1 class="bebas text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-white mb-4 sm:mb-6 animate-fadeInUp opacity-0 leading-tight">
+                SPORT CLUB
+            </h1>
+            <h2 class="bebas text-6xl sm:text-8xl md:text-9xl lg:text-[12rem] gold-gradient glow-gold-text mb-6 sm:mb-8 animate-fadeInUp opacity-0 delay-200 leading-none">
+                CORINTHIANS
+            </h2>
+            <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 mb-8 sm:mb-12 max-w-3xl mx-auto animate-fadeInUp opacity-0 delay-400 font-semibold px-4">
+                O MAIOR CLUBE DO BRASIL. A PAIXÃO DE MILHÕES. O ORGULHO DA FIEL.
+            </p>
+            
+            <!-- Fixed button visibility and added proper z-index -->
+            <div class="animate-fadeInUp opacity-0 delay-600 relative z-20">
+                <a href="quiz.html" class="inline-block">
+                    <button class="bebas text-xl sm:text-2xl md:text-3xl bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-500 text-black px-8 sm:px-12 md:px-16 py-4 sm:py-5 md:py-6 rounded-full font-bold hover:scale-105 transition-all duration-300 animate-pulse-custom shadow-2xl glow-gold">
+                        TESTE SEU CONHECIMENTO
+                    </button>
+                </a>
+            </div>
+            
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mt-12 sm:mt-16 md:mt-20 animate-fadeInUp opacity-0 delay-800">
+                <div class="bg-white bg-opacity-5 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-yellow-500 border-opacity-30 hover:border-opacity-100 transition-all duration-300 hover:scale-105">
+                    <div class="bebas text-3xl sm:text-4xl md:text-5xl gold-gradient mb-2">1910</div>
+                    <div class="text-xs sm:text-sm text-gray-400 uppercase tracking-wider">Fundação</div>
+                </div>
+                <div class="bg-white bg-opacity-5 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-yellow-500 border-opacity-30 hover:border-opacity-100 transition-all duration-300 hover:scale-105">
+                    <div class="bebas text-3xl sm:text-4xl md:text-5xl gold-gradient mb-2">30+</div>
+                    <div class="text-xs sm:text-sm text-gray-400 uppercase tracking-wider">Títulos</div>
+                </div>
+                <div class="bg-white bg-opacity-5 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-yellow-500 border-opacity-30 hover:border-opacity-100 transition-all duration-300 hover:scale-105">
+                    <div class="bebas text-3xl sm:text-4xl md:text-5xl gold-gradient mb-2">2X</div>
+                    <div class="text-xs sm:text-sm text-gray-400 uppercase tracking-wider">Mundial</div>
+                </div>
+                <div class="bg-white bg-opacity-5 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-yellow-500 border-opacity-30 hover:border-opacity-100 transition-all duration-300 hover:scale-105">
+                    <div class="bebas text-3xl sm:text-4xl md:text-5xl gold-gradient mb-2">30M+</div>
+                    <div class="text-xs sm:text-sm text-gray-400 uppercase tracking-wider">Torcedores</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Features Section -->
+    <div class="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black to-gray-900">
+        <div class="max-w-7xl mx-auto">
+            <h3 class="bebas text-4xl sm:text-5xl md:text-6xl text-center text-white mb-8 sm:mb-12 md:mb-16">
+                <span class="gold-gradient">TRADIÇÃO</span> E <span class="gold-gradient">GLÓRIA</span>
+            </h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                <!-- Card 1 -->
+                <div class="bg-gradient-to-br from-gray-900 to-black p-6 sm:p-8 rounded-2xl border border-yellow-500 border-opacity-20 hover:border-opacity-60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-yellow-500/20 animate-slideInLeft opacity-0">
+                    <div class="bebas text-5xl sm:text-6xl gold-gradient mb-4">HISTÓRIA</div>
+                    <p class="text-sm sm:text-base text-gray-300 leading-relaxed">
+                        Fundado em 1910, o Corinthians nasceu da paixão de trabalhadores e se tornou o clube do povo, conquistando o coração de milhões.
+                    </p>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="bg-gradient-to-br from-gray-900 to-black p-6 sm:p-8 rounded-2xl border border-yellow-500 border-opacity-20 hover:border-opacity-60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-yellow-500/20 animate-slideInLeft opacity-0 delay-200">
+                    <div class="bebas text-5xl sm:text-6xl gold-gradient mb-4">FIEL</div>
+                    <p class="text-sm sm:text-base text-gray-300 leading-relaxed">
+                        A maior torcida do Brasil. Apaixonada, presente e leal. A Fiel é o 12º jogador em campo, sempre ao lado do Timão.
+                    </p>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="bg-gradient-to-br from-gray-900 to-black p-6 sm:p-8 rounded-2xl border border-yellow-500 border-opacity-20 hover:border-opacity-60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-yellow-500/20 animate-slideInLeft opacity-0 delay-400">
+                    <div class="bebas text-5xl sm:text-6xl gold-gradient mb-4">GLÓRIA</div>
+                    <p class="text-sm sm:text-base text-gray-300 leading-relaxed">
+                        Bicampeão Mundial, Heptacampeão Brasileiro, e inúmeros títulos que consolidam o Corinthians como gigante do futebol.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="bg-black py-6 sm:py-8 px-4 border-t border-yellow-500 border-opacity-20">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-gray-400 text-xs sm:text-sm">© 2025 Sport Club Corinthians Paulista - Todos os direitos reservados</p>
+            <p class="bebas text-base sm:text-lg gold-gradient mt-2">VAI CORINTHIANS!</p>
+        </div>
+    </footer>
+</body>
+</html>
