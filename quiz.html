@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Corinthians - Teste Seu Conhecimento</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            overflow-x: hidden;
+        }
+        
+        .bebas {
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 0.05em;
+        }
+        
+        .gold-gradient {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideOut {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.5s ease-out forwards;
+        }
+        
+        .slide-out {
+            animation: slideOut 0.5s ease-out forwards;
+        }
+        
+        .scale-in {
+            animation: scaleIn 0.6s ease-out forwards;
+        }
+        
+        .noise-bg {
+            position: relative;
+        }
+        
+        .noise-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="noise-bg">
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-black bg-opacity-80 backdrop-blur-sm border-b border-yellow-500 border-opacity-30 py-4 sm:py-6 px-4 sm:px-6 lg:px-8 sticky top-0 z-50">
+            <div class="max-w-4xl mx-auto flex justify-between items-center">
+                <a href="index.html" class="bebas text-2xl sm:text-3xl md:text-4xl gold-gradient hover:scale-105 transition-transform">
+                    CORINTHIANS
+                </a>
+                <div class="text-right">
+                    <div class="text-xs sm:text-sm text-gray-400 uppercase tracking-wider mb-1">Progresso</div>
+                    <div class="bebas text-xl sm:text-2xl text-white" id="progress">0/5</div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Progress Bar -->
+        <div class="w-full bg-gray-900 h-2">
+            <div id="progressBar" class="h-full bg-gradient-to-r from-yellow-500 to-yellow-400 transition-all duration-500" style="width: 0%"></div>
+        </div>
+        
+        <!-- Main Content -->
+        <main class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+            <div class="max-w-3xl w-full">
+                <!-- Quiz Container -->
+                <div id="quizContainer" class="bg-gradient-to-br from-gray-900 to-black p-6 sm:p-8 md:p-12 rounded-2xl border border-yellow-500 border-opacity-30 shadow-2xl">
+                    <!-- Question -->
+                    <div id="questionContainer" class="slide-in">
+                        <div class="bebas text-sm sm:text-base text-yellow-500 mb-3 sm:mb-4 uppercase tracking-wider">
+                            Questão <span id="questionNumber">1</span>
+                        </div>
+                        <h2 id="question" class="bebas text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white mb-6 sm:mb-8 md:mb-10 leading-tight">
+                            <!-- Question text will be inserted here -->
+                        </h2>
+                        
+                        <!-- Options -->
+                        <div id="options" class="space-y-3 sm:space-y-4">
+                            <!-- Options will be inserted here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Result Container (hidden initially) -->
+                    <div id="resultContainer" class="hidden">
+                        <div class="text-center scale-in">
+                            <div class="bebas text-4xl sm:text-5xl md:text-6xl lg:text-7xl gold-gradient mb-4 sm:mb-6">
+                                RESULTADO
+                            </div>
+                            <div id="scoreDisplay" class="bebas text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-white mb-4 sm:mb-6">
+                                <!-- Score will be inserted here -->
+                            </div>
+                            <div id="resultMessage" class="text-lg sm:text-xl md:text-2xl text-gray-300 mb-6 sm:mb-8 md:mb-10 px-4 leading-relaxed">
+                                <!-- Result message will be inserted here -->
+                            </div>
+                            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                                <button onclick="restartQuiz()" class="bebas text-xl sm:text-2xl bg-gradient-to-r from-yellow-500 to-yellow-400 text-black px-8 sm:px-12 py-4 sm:py-5 rounded-full font-bold hover:scale-105 transition-all duration-300 shadow-xl">
+                                    TENTAR NOVAMENTE
+                                </button>
+                                <a href="index.html" class="bebas text-xl sm:text-2xl bg-white bg-opacity-10 text-white border-2 border-yellow-500 px-8 sm:px-12 py-4 sm:py-5 rounded-full font-bold hover:scale-105 hover:bg-opacity-20 transition-all duration-300 text-center">
+                                    VOLTAR AO INÍCIO
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        const quizData = [
+            {
+                question: "Em que ano o Corinthians foi fundado?",
+                options: ["1910", "1912", "1905", "1920"],
+                correct: 0
+            },
+            {
+                question: "Quantas vezes o Corinthians foi campeão mundial?",
+                options: ["1 vez", "2 vezes", "3 vezes", "Nunca foi"],
+                correct: 1
+            },
+            {
+                question: "Qual é o apelido da torcida do Corinthians?",
+                options: ["Nação", "Massa", "Fiel", "Torcida"],
+                correct: 2
+            },
+            {
+                question: "Qual foi o ano da primeira conquista da Libertadores?",
+                options: ["2000", "2010", "2012", "2015"],
+                correct: 2
+            },
+            {
+                question: "Quantos títulos brasileiros o Corinthians possui?",
+                options: ["5", "6", "7", "8"],
+                correct: 2
+            }
+        ];
+        
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+        
+        function loadQuestion() {
+            answered = false;
+            const data = quizData[currentQuestion];
+            
+            document.getElementById('questionNumber').textContent = currentQuestion + 1;
+            document.getElementById('question').textContent = data.question;
+            document.getElementById('progress').textContent = `${currentQuestion}/5`;
+            document.getElementById('progressBar').style.width = `${(currentQuestion / 5) * 100}%`;
+            
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+            
+            data.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'w-full text-left bg-white bg-opacity-5 hover:bg-opacity-10 border-2 border-gray-700 hover:border-yellow-500 text-white p-4 sm:p-5 md:p-6 rounded-xl transition-all duration-300 hover:scale-102 text-base sm:text-lg md:text-xl font-semibold';
+                button.textContent = option;
+                button.onclick = () => selectAnswer(index, button);
+                optionsContainer.appendChild(button);
+            });
+            
+            const container = document.getElementById('questionContainer');
+            container.classList.remove('slide-out');
+            container.classList.add('slide-in');
+        }
+        
+        function selectAnswer(selected, button) {
+            if (answered) return;
+            answered = true;
+            
+            const data = quizData[currentQuestion];
+            const buttons = document.querySelectorAll('#options button');
+            
+            buttons.forEach((btn, index) => {
+                btn.disabled = true;
+                if (index === data.correct) {
+                    btn.classList.remove('border-gray-700', 'hover:border-yellow-500');
+                    btn.classList.add('border-green-500', 'bg-green-500', 'bg-opacity-20');
+                } else if (index === selected && selected !== data.correct) {
+                    btn.classList.remove('border-gray-700', 'hover:border-yellow-500');
+                    btn.classList.add('border-red-500', 'bg-red-500', 'bg-opacity-20');
+                }
+            });
+            
+            if (selected === data.correct) {
+                score++;
+                confetti({
+                    particleCount: 50,
+                    spread: 60,
+                    origin: { y: 0.6 },
+                    colors: ['#FFD700', '#FFA500', '#FFFFFF']
+                });
+            }
+            
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < quizData.length) {
+                    const container = document.getElementById('questionContainer');
+                    container.classList.remove('slide-in');
+                    container.classList.add('slide-out');
+                    setTimeout(loadQuestion, 500);
+                } else {
+                    showResult();
+                }
+            }, 1500);
+        }
+        
+        function showResult() {
+            document.getElementById('progressBar').style.width = '100%';
+            document.getElementById('progress').textContent = '5/5';
+            
+            document.getElementById('questionContainer').classList.add('hidden');
+            document.getElementById('resultContainer').classList.remove('hidden');
+            
+            document.getElementById('scoreDisplay').textContent = `${score}/5`;
+            
+            let message = '';
+            if (score === 5) {
+                message = 'PERFEITO! Você é um verdadeiro corintiano! A Fiel se orgulha de você! 🏆';
+                confetti({
+                    particleCount: 200,
+                    spread: 100,
+                    origin: { y: 0.6 },
+                    colors: ['#FFD700', '#FFA500', '#FFFFFF', '#000000']
+                });
+            } else if (score >= 3) {
+                message = 'Muito bem! Você conhece bastante sobre o Timão! Continue assim, Fiel! ⚽';
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#FFD700', '#FFA500', '#FFFFFF']
+                });
+            } else {
+                message = 'Você precisa estudar mais sobre o Corinthians! Mas a paixão é o que importa! 🖤🤍';
+            }
+            
+            document.getElementById('resultMessage').textContent = message;
+        }
+        
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            answered = false;
+            
+            document.getElementById('resultContainer').classList.add('hidden');
+            document.getElementById('questionContainer').classList.remove('hidden');
+            
+            loadQuestion();
+        }
+        
+        // Load first question on page load
+        loadQuestion();
+    </script>
+
+    <button onclick="window.close()" class="bebas text-xl sm:text-2xl bg-red-600 text-white px-6 py-3 rounded-full font-bold hover:bg-red-700 transition duration-300">
+  Sair
+</button>
+
+</body>
+</html>
